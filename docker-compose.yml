@@ -1,0 +1,17 @@
+version: "3"
+services: 
+
+  base:
+    build:
+      context: docker_base/
+    image: mbonnet/img_base
+    container_name: cnt_base
+
+  test:
+    restart: on-failure
+    depends_on:
+      - 'base'
+    build:
+      context: docker_test/
+    image: mbonnet/img_test
+    container_name: cnt_test
