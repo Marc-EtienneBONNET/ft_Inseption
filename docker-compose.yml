@@ -1,17 +1,19 @@
 version: "3"
 services: 
 
-  base:
-    build:
-      context: docker_base/
-    image: mbonnet/img_base
-    container_name: cnt_base
-
-  test:
+  nginx:
     restart: on-failure
-    depends_on:
-      - 'base'
     build:
-      context: docker_test/
-    image: mbonnet/img_test
-    container_name: cnt_test
+      context: docker_nginx/
+    image : mbonnet/img_nginx
+    container_name: cnt_nginx
+    ports: 
+     - "70:80"
+  mariadb:
+    restart: on-failure
+    build:
+      context: docker_mariadb
+    image: mbonnet/img_maria
+    container_name: cnt_mariadb
+    ports:
+      - "71:80"
