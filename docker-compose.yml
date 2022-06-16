@@ -9,11 +9,11 @@ services:
     container_name: cnt_nginx
     ports: 
      - "70:80"
-  mariadb:
-    restart: on-failure
-    build:
-      context: docker_mariadb
-    image: mbonnet/img_maria
-    container_name: cnt_mariadb
-    ports:
-      - "71:80"
+  # mariadb:
+  #   restart: on-failure
+  #   build:
+  #     context: docker_mariadb
+  #   image: mbonnet/img_maria
+  #   container_name: cnt_mariadb
+  #   ports:
+  #     - "71:80"
