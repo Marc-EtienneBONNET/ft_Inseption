@@ -1,4 +1,9 @@
 version: "3"
+
+networks:
+  wp:
+    name: wp
+
 services: 
 
   nginx:
@@ -7,13 +12,18 @@ services:
       context: docker_nginx/
     image : mbonnet/img_nginx
     container_name: cnt_nginx
+    networks:
+     - wp
     ports: 
-     - "70:80"
-  # mariadb:
-  #   restart: on-failure
-  #   build:
-  #     context: docker_mariadb
-  #   image: mbonnet/img_maria
-  #   container_name: cnt_mariadb
-  #   ports:
-  #     - "71:80"
+     - "80:80"
+
+  wordpress:
+    restart: on-failure
+    build:
+     context: docker_wordpress
+    image: mbonnet/img_wordpress
+    depends_on:
+            - nginx
+    container_name: cnt_wordpress
+    networks:
+       - wp

@@ -2,26 +2,30 @@ FROM debian:buster
 RUN apt-get -y update 
 RUN apt-get -y upgrade
 
+RUN apt-get install -y wget\
+	unzip
+
+WORKDIR /var/www/html
+RUN wget http://wordpress.org/latest.zip
+RUN unzip latest.zip 
+RUN cp -R wordpress/* ./
+RUN rm -rf latest.zip \
+	wordpress
+
+RUN wget -q https://packages.sury.org/php/apt.gpg -O- | sudo apt-key add -sudo echo "deb https://packages.sury.org/php/ buster main" | tee /etc/apt/sources.list.d/php.list
+RUN apt-get -y update && apt-get -y upgrade
 RUN apt-get -y install \
-	php \
-	php-common \
-	php-mysql
-
-RUN apt-get install -y curl
-RUN curl http://wordpress.org/latest.tar.gz
-# WORKDIR /var/www/html
-
-
-# RUN apt-get -y install wordpress
-# RUN apt-get -y update
-# RUN apt-get -y upgrade
-
-# RUN apt-get -y install \
-# 	lsb-release \
-# 	apt-transport-https \
-# 	ca-certificates 
-# RUN curl -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg
-# RUN echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" \
-#  	tee /etc/apt/sources.list.d/php.list
-# RUN apt-get -y update
-# RUN apt-get install -y php7
+ 	php \
+ 	php-common \
+ 	php-mysql \
+	php-fpm 
+RUN apt-get -y update 
+RUN apt-get -y upgrade
+COPY www.conf  /etc/php/7.3/fpm/pool.d/www.conf
+COPY php-fpm.conf  /etc/php/7.3/fpm/php-fpm.conf
+RUN apt install -y vim
+RUN chown -R www-data:www-data /var/www/html
+RUN chmod -R 755 /var/www/html/ 
+RUN chown -R www-data:www-data /var/www/html
+RUN mkdir /var/php
+CMD ["php-fpm7.3", "-F"]

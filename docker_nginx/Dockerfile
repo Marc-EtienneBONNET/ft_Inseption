@@ -1,11 +1,5 @@
 FROM debian:buster
-RUN apt-get -y update
-RUN apt-get -y upgrade
-RUN apt-get install nginx -y
-RUN rm /etc/nginx/nginx.conf
-COPY nginx.conf /etc/nginx/nginx.conf
-RUN apt-get -y update
-RUN apt-get -y upgrade
+RUN apt-get -y update && apt-get -y upgrade && apt-get install nginx vim -y 
+COPY default.conf /etc/nginx/sites-available/default
 EXPOSE 80
-#workdir
-#CMD ["nginx", "-g", "daemon off;"]
+CMD ["nginx", "-g", "daemon off;"]
