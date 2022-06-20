@@ -1,7 +1,7 @@
 all :
 	docker-compose up --build -d
 clear :
-	docker-compose down
+	docker-compose down --rmi all
 
 nginx:
 	docker build -t nginx docker_nginx/.
@@ -12,5 +12,5 @@ wp:
 	docker run -tip 9000:9000 wp
 
 db:
-	docker build -t wp docker_mariadb/.
-	docker run -tip 9000:9000 mariadb
+	docker build -t mariadb docker_mariadb/.
+	docker run -tip 80:80 mariadb

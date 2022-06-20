@@ -6,45 +6,46 @@ networks:
 
 services: 
 
-  # nginx:
-  #   restart: on-failure
-  #   build:
-  #     context: docker_nginx/
-  #   image : mbonnet/img_nginx
-  #   container_name: cnt_nginx
-  #   depends_on:
-  #           - wordpress
-  #   networks:
-  #    - wp
-  #   ports: 
-  #    - "80:80"
-  #   volumes:
-  #     - wp_volume:/var/www/html
+  nginx:
+    restart: on-failure
+    build:
+      context: docker_nginx/
+    image : mbonnet/img_nginx
+    container_name: cnt_nginx
+    depends_on:
+            - wordpress
+    networks:
+     - wp
+    ports: 
+     - "80:80"
+    volumes:
+      - wp_volume:/var/www/html
 
-  # wordpress:
-  #   restart: on-failure
-  #   build:
-  #    context: docker_wordpress
-  #   image: mbonnet/img_wordpress
-  #   container_name: cnt_wordpress
-  #   networks:
-  #      - wp
-  #   volumes:
-  #     - wp_volume:/var/www/data_html
+  wordpress:
+    restart: on-failure
+    build:
+     context: docker_wordpress
+    image: mbonnet/img_wordpress
+    container_name: cnt_wordpress
+    networks:
+       - wp
+    volumes:
+      - wp_volume:/var/www/html
 
-  mariadb:
-      restart: on-failure
-      build:
-        context: docker_mariadb
-      image: mbonnet/img_mariadb
-      container_name: cnt_mariadb
-      environment:
-        MARIADB_ROOT_PASSWORD: ROOT
-        MARIADB_DATABASE: mydatabase
-        MARIADB_USER: ROOT
-        MARIADB_PASSWORD: ROOT
+  # mariadb:
+  #     restart: on-failure
+  #     build:
+  #       context: docker_mariadb
+  #     image: mbonnet/img_mariadb
+  #     container_name: cnt_mariadb
+  #     # environment:
+  #     #   MARIADB_ROOT_PASSWORD: ROOT
+  #     #   MARIADB_DATABASE: mydatabase
+  #     #   MARIADB_USER: ROOT
+  #     #   MARIADB_PASSWORD: ROOT
 
-    
 
-# volumes:
-#   wp_volume:
+
+volumes:
+  wp_volume:
+
