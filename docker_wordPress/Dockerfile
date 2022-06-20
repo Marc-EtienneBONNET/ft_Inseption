@@ -24,8 +24,8 @@ RUN apt-get -y upgrade
 COPY www.conf  /etc/php/7.3/fpm/pool.d/www.conf
 COPY php-fpm.conf  /etc/php/7.3/fpm/php-fpm.conf
 RUN apt install -y vim
-RUN chown -R www-data:www-data /var/www/html
 RUN chmod -R 755 /var/www/html/ 
 RUN chown -R www-data:www-data /var/www/html
-RUN mkdir /var/php
+COPY cp_wp.sh /cp_wp.sh
+EXPOSE 9000
 CMD ["php-fpm7.3", "-F"]

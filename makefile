@@ -9,4 +9,8 @@ nginx:
 
 wp:
 	docker build -t wp docker_wordpress/.
-	docker run -tip 90:9000 wp 
+	docker run -tip 9000:9000 wp
+
+db:
+	docker build -t wp docker_mariadb/.
+	docker run -tip 9000:9000 mariadb
