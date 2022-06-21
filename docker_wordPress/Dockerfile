@@ -22,3 +22,7 @@ RUN chmod -R 755 /var/www/html/
 RUN chown -R www-data:www-data /var/www/html
 EXPOSE 9000
 CMD ["php-fpm7.3", "-F"]
+
+# wp core download --locale=fr_FR --path=/var/www/html 
+# wp config create --skip-check --allow-root --path=/var/www/html --dbname=$MYSQL_DATABASE --dbuser=$MYSQL_USER --dbpass=$MYSQL_PASSWORD --dbhost=mariadb 
+# wp core install --skip-email --allow-root --path=/var/www/html --url=http://localhost/ --title=ft_services --admin_user=$DB_USER --admin_password=$DB_PASSWORD --admin_email=coucou@coucou.com
