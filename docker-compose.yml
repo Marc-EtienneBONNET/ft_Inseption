@@ -1,10 +1,49 @@
-version: "3"
+version: "3.5"
 
 networks:
   wp:
     name: wp
 
 services: 
+
+  mariadb:
+      restart: on-failure
+      build:
+        context: docker_mariadb
+      image: mbonnet/img_mariadb
+      container_name: cnt_mariadb
+      networks:
+       - wp
+      volumes:
+      - data_mysql:/var/lib/mysql
+      environment:
+        MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+        MYSQL_DATABASE: ${MYSQL_DATABASE}
+        MYSQL_USER: ${MYSQL_USER}
+        MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      expose: 
+        - 3306
+
+
+  wordpress:
+    restart: on-failure
+    build:
+     context: docker_wordpress
+    image: mbonnet/img_wordpress
+    container_name: cnt_wordpress
+    depends_on:
+      - mariadb
+    networks:
+      - wp
+    volumes:
+      - wp_volume:/var/www/html
+    environment:
+      WORDPRESS_DB_HOST: ${WORDPRESS_DB_HOST}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+
 
   nginx:
     restart: on-failure
@@ -13,7 +52,7 @@ services:
     image : mbonnet/img_nginx
     container_name: cnt_nginx
     depends_on:
-            - wordpress
+      - wordpress
     networks:
      - wp
     ports: 
@@ -21,31 +60,9 @@ services:
     volumes:
       - wp_volume:/var/www/html
 
-  wordpress:
-    restart: on-failure
-    build:
-     context: docker_wordpress
-    image: mbonnet/img_wordpress
-    container_name: cnt_wordpress
-    networks:
-       - wp
-    volumes:
-      - wp_volume:/var/www/html
-
-  # mariadb:
-  #     restart: on-failure
-  #     build:
-  #       context: docker_mariadb
-  #     image: mbonnet/img_mariadb
-  #     container_name: cnt_mariadb
-  #     # environment:
-  #     #   MARIADB_ROOT_PASSWORD: ROOT
-  #     #   MARIADB_DATABASE: mydatabase
-  #     #   MARIADB_USER: ROOT
-  #     #   MARIADB_PASSWORD: ROOT
-
-
 
 volumes:
   wp_volume:
+  data_mysql:
+
 

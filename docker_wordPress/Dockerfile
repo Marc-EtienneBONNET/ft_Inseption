@@ -17,7 +17,8 @@ RUN unzip latest.zip && \
 
 COPY www.conf  /etc/php/7.3/fpm/pool.d/www.conf
 COPY php-fpm.conf  /etc/php/7.3/fpm/php-fpm.conf
-RUN chmod -R 755 /var/www/html/ 
+COPY wp-config.php  /var/www/html/wp-config.php
+RUN chmod -R 755 /var/www/html/
 RUN chown -R www-data:www-data /var/www/html
 EXPOSE 9000
 CMD ["php-fpm7.3", "-F"]

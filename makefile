@@ -3,6 +3,12 @@ all :
 clear :
 	docker-compose down --rmi all
 
+fclear: clear 
+	docker image prune
+	docker volume prune
+	docker network prune
+	docker system prune --volumes
+
 nginx:
 	docker build -t nginx docker_nginx/.
 	docker run -tip 80:80 nginx
@@ -13,4 +19,4 @@ wp:
 
 db:
 	docker build -t mariadb docker_mariadb/.
-	docker run -tip 80:80 mariadb
+	docker run -tip 100:100 mariadb
