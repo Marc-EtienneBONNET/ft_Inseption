@@ -4,10 +4,10 @@ clear :
 	docker-compose down --rmi all
 
 fclear: clear 
-	docker image prune
-	docker volume prune
-	docker network prune
-	docker system prune --volumes
+	docker image prune 
+	docker volume prune 
+	docker network prune 
+	docker system prune --volumes 
 
 nginx:
 	docker build -t nginx docker_nginx/.
