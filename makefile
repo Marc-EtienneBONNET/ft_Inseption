@@ -22,3 +22,7 @@ wp:
 db:
 	docker build -t mariadb docker_mariadb/.
 	docker run -tip 100:100 mariadb
+
+test:
+	chmod +x script.sh
+	./script.sh

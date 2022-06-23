@@ -1,0 +1,1 @@
+sudo echo "127.0.0.1		${SUDO_USER}.42.fr" >> /etc/hosts
