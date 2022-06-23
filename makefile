@@ -9,6 +9,8 @@ fclear: clear
 	docker network prune 
 	docker system prune --volumes 
 
+re : fclear all
+
 nginx:
 	docker build -t nginx docker_nginx/.
 	docker run -tip 80:80 nginx
