@@ -1,3 +1,10 @@
 
-wp core install --allow-root --url=$WORDPRESS_URL --title=$WORDPRESS_TITLE --admin_user=$MYSQL_USER --admin_password=$MYSQL_PASSWORD --admin_email=$WORDPRESS_EMAIL
+wp core install --allow-root 	--url=$WORDPRESS_URL \
+								--title=$WORDPRESS_TITLE \
+								--admin_user=$WORDPRESS_USER1 \
+								--admin_password=$WORDPRESS_PASS1 \
+								--admin_email=$WORDPRESS_EMAIL1
+wp user create --allow-root $WORDPRESS_USER2 \
+							$WORDPRESS_EMAIL2 \
+							--user_pass=$WORDPRESS_PASS2
 exec php-fpm7.3 -F

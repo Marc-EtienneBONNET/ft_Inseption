@@ -6,6 +6,12 @@ networks:
 
 services: 
 
+  base:
+    build:
+      context: docker_base
+    image: mbonnet/img_base
+    container_name: cnt_base
+
   mariadb:
       restart: on-failure
       build:
@@ -27,7 +33,6 @@ services:
         timeout: 5s
         retries: 5
 
-
   wordpress:
     restart: on-failure
     build:
@@ -36,8 +41,7 @@ services:
     container_name: cnt_wordpress
     depends_on:
       mariadb:
-        condition: service_healthy
-
+        condition: service_healthy   
     networks:
       - wp
     volumes:
@@ -48,11 +52,14 @@ services:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-      WORDPRESS_EMAIL: ${WORDPRESS_EMAIL}
       WORDPRESS_TITLE: ${WORDPRESS_TITLE}
       WORDPRESS_URL: ${WORDPRESS_URL}
-
-
+      WORDPRESS_USER1: ${WORDPRESS_USER1}
+      WORDPRESS_PASS1: ${WORDPRESS_PASS1}
+      WORDPRESS_EMAIL1: ${WORDPRESS_EMAIL1}
+      WORDPRESS_USER2: ${WORDPRESS_USER2}
+      WORDPRESS_PASS2: ${WORDPRESS_PASS2}
+      WORDPRESS_EMAIL2: ${WORDPRESS_EMAIL2}
 
   nginx:
     restart: on-failure

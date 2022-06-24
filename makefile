@@ -11,6 +11,10 @@ fclear: clear
 
 re : fclear all
 
+base:
+	docker build -t base docker_base/.
+	docker run -tip 80:80 base
+
 nginx:
 	docker build -t nginx docker_nginx/.
 	docker run -tip 80:80 nginx
@@ -25,4 +29,4 @@ db:
 
 test:
 	chmod +x script.sh
-	./script.sh
+	sudo ./script.sh
