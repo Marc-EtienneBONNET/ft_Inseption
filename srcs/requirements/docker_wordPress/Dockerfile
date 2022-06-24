@@ -26,10 +26,13 @@ COPY www.conf  /etc/php/7.3/fpm/pool.d/www.conf
 COPY php-fpm.conf  /etc/php/7.3/fpm/php-fpm.conf
 COPY wp-config.php  /var/www/html/wp-config.php
 COPY script.sh  /script.sh
+
 RUN chmod -R 755 /script.sh
 RUN chmod -R 755 /var/www/html/
 RUN chown -R www-data:www-data /var/www/html
+
 EXPOSE 9000
+
 ENTRYPOINT /./script.sh
 #CMD ["/./script.sh"]
 
