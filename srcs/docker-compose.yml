@@ -8,14 +8,14 @@ services:
 
   base:
     build:
-      context: requirements/docker_base
+      context: requirements/base
     image: mbonnet/base
     container_name: cnt_base
 
   mariadb:
       restart: on-failure
       build:
-        context: requirements/docker_mariadb
+        context: requirements/mariadb
       image: mbonnet/mariadb
       container_name: cnt_mariadb
       networks:
@@ -36,7 +36,7 @@ services:
   wordpress:
     restart: on-failure
     build:
-     context: requirements/docker_wordpress
+     context: requirements/wordPress
     image: mbonnet/img_wordpress
     container_name: wordpress
     depends_on:
@@ -64,7 +64,7 @@ services:
   nginx:
     restart: on-failure
     build:
-      context: requirements/docker_nginx/
+      context: requirements/nginx/
     image : mbonnet/nginx
     container_name: cnt_nginx
     depends_on:
@@ -78,7 +78,19 @@ services:
       - wp_volume:/var/www/html
 
 volumes:
-  wp_volume: 
+  wp_volume:
+    driver: local
+    name: wp_volume
+    driver_opts:
+      type: none
+      o: bind
+      device: home/mbonnet/data/wp
   data_mysql:
+    driver: local
+    name: data_mysql
+    driver_opts:
+      type: none
+      o: bind
+      device: home/mbonnet/data/mysql
 
 
